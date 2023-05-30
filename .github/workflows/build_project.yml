@@ -7,7 +7,7 @@ name: "Build project"
 on:
   workflow_dispatch:
     inputs:
-        dummy:
+        name:
           description: "Manual workflow trigger for release"
           required: false
   push:
