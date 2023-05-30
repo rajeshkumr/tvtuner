@@ -6,6 +6,10 @@ name: "Build project"
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: "Manual workflow trigger for release"
+        required: false
   push:
     branches:
       - main
