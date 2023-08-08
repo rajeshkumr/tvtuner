@@ -1,0 +1,7 @@
+.country-list .item {
+  cursor: pointer;
+}
+
+.country-list .item.active {
+  border: 3px solid #3182ce; 
+}
