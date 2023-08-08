@@ -10,3 +10,17 @@ export const channelItemState = atom({
     tvgId: "AfghanNobelMovies.ca"
   }
 });
+
+export const countryItemState = atom({
+  key: "countryItem",
+  default: {
+    name: "Afghanistan",
+    code: "AF",
+    flag: "🇦🇫"
+  }
+});
+
+export const selectedChannelState = atom({
+  key: "selectedChannel",
+  default: 0
+});
