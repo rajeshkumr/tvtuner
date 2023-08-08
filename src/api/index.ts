@@ -1,4 +1,5 @@
 const BASE_URL=import.meta.env.VITE_BASE_URL;
+// @ts-ignore
 import { parseM3U, M3uPlaylist, M3uChannel } from "@iptv/playlist";
 const CHANNEL_URL=`${BASE_URL}/iptv/index.country.m3u`;
 const COUNTRY_URL=`${BASE_URL}/api/countries.json`;

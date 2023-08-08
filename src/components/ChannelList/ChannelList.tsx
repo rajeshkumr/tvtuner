@@ -1,6 +1,7 @@
 import { Box, Image, Flex } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { channelItemState, selectedChannelState } from "../../recoilContext";
+// @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
 import React from "react";
 import "./ChannelList.style.css";

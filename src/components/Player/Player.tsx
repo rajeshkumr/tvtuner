@@ -7,6 +7,7 @@ import { ChannelList } from "../ChannelList";
 import { CountryList } from "../CountryList";
 import { selector, useRecoilValue, useRecoilState } from "recoil";
 import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
+// @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
 
 interface Player {
@@ -38,6 +39,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
 
   const getCountryList = async () => {
     const country: Country = await getCountries();
+    // @ts-ignore
     setCountry(country);
   };
 
