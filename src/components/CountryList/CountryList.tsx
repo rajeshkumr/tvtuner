@@ -15,20 +15,23 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
     // @ts-ignore
     const item = props.list.find((_propItem: Channel, index: number) => index === key);
     setActiveClass(key);
-    console.log("country list", item);
     setCountryItem({
       ...countryItem,
       name: item?.name,
       code: item?.code,
       flag: item?.flag,
     });
+    event?.currentTarget?.scrollIntoView({
+      inline: "center",
+      behavior: "smooth"
+    });
   }
   
 return (
-<Flex className={"country-list"} overflowY={'scroll'} direction={"row"} justifyContent={"space-between"} alignItems={"center"} scrollSnapType={"x mandatory"}>
+<Flex className={"country-list"} overflowY={'scroll'} direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
 {/* @ts-ignore */ }
 {props.list.map((item: Channel, index: number) => (
-<Box key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} boxShadow={"0rem 0rem 0.2rem #000"} scrollSnapAlign={"center"} _hover={{
+<Box key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} boxShadow={"0rem 0rem 0.2rem #000"} _hover={{
   border: "1px solid #000",
   boxShadow: "0rem 0rem 0.4rem 0.2rem #000"
 }}>

@@ -31,6 +31,10 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       tvgLogo: item?.tvgLogo,
       tvgId: item?.tvgId,
     });
+    event?.currentTarget?.scrollIntoView({
+      inline: "center",
+      behavior: "smooth"
+    });
   }
 
   return (
@@ -40,7 +44,6 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       direction={"row"}
       justifyContent={"space-between"}
       alignItems={"center"}
-      scrollSnapType={"x mandatory"}
     >
       {props.list.map((item: M3uChannel, index: number) => (
         <Box
@@ -54,7 +57,6 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
           margin={"0.2rem"}
           backgroundColor={"#eee"}
           boxShadow={"0rem 0rem 0.2rem #000"}
-          scrollSnapAlign={"center"}
           _hover={{
             border: "1px solid #000",
             boxShadow: "0rem 0rem 0.4rem 0.2rem #000",
