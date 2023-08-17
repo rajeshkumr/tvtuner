@@ -31,7 +31,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       tvgLogo: item?.tvgLogo,
       tvgId: item?.tvgId,
     });
-    event?.currentTarget?.scrollIntoView({
+    (event?.currentTarget as HTMLInputElement)?.scrollIntoView({
       inline: "center",
       behavior: "smooth"
     });
