@@ -23,7 +23,8 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
     });
     (event?.currentTarget as HTMLInputElement)?.scrollIntoView({
       inline: "center",
-      behavior: "smooth"
+      behavior: "smooth",
+      block: "nearest"
     });
   }
   
