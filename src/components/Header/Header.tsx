@@ -60,14 +60,14 @@ export const Header: React.FunctionComponent<Header> = (props) => {
                   variant={"ghost"}
                   colorScheme={props.config.colorScheme}
                 >
-                  <Link to={"/"}>Home</Link>
+                  <Link to={"/"}>Cricket</Link>
                 </Button>
                 <Button
                   onClick={onClose}
                   variant={"ghost"}
                   colorScheme={props.config.colorScheme}
                 >
-                  <Link to={"/Videos"}>Videos</Link>
+                  <Link to={"/tv"}>TV</Link>
                 </Button>
               </VStack>
               <HStack
