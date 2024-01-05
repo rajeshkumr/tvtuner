@@ -83,8 +83,8 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           muted={props.muted}
           controls={props.controls}
         />
-        <ChannelList list={selectedChannel} activeIndex={activeIndex} />
       </Box>
+      <ChannelList list={selectedChannel} activeIndex={activeIndex} />
       {/* </Spinner> */}
     </>
   );

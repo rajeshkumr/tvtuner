@@ -8,8 +8,7 @@ import {
   Button,
   useDisclosure,
   VStack,
-  HStack,
-  Box,
+  Box
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -23,74 +22,64 @@ export const Header: React.FunctionComponent<Header> = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Box 
-        pos={"sticky"}
-        zIndex={"9"}
-        top={"1"}
-        left={"1"}
-        w={"100%"}
-        display={"flex"}>
+      <Box
+        background="#d4bbfc"
+        pos="sticky"
+        zIndex="9"
+        top="0"
+        left="0"
+        w="100%"
+        display="flex"
+        boxShadow="dark-lg"
+      >
         <Button
-          colorScheme={props.config.colorScheme}
-          p={"0"}
-          ms={"2%"}
-          borderRadius={"full"}
+          colorScheme="#000"
+          color="#000"
+          p="0"
+          m="1%"
           onClick={onOpen}
-          zIndex={"overlay"}
+          zIndex="overlay"
+          boxShadow="dark-lg"
+          rounded="md"
+          _hover={{
+            borderColor: "#000",
+            border: "2px solid #000",
+          }}
         >
-          <HamburgerIcon />
+          <HamburgerIcon width="2rem" height="2rem" />
         </Button>
         <Logo config={props.config} />
       </Box>
       <Drawer
         isOpen={isOpen}
-        placement={"left"}
+        placement="left"
         onClose={onClose}
         onOverlayClick={onClose}
-        size={"xs"}
       >
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader textTransform={"uppercase"}>{props.config.name}</DrawerHeader>
+            <DrawerHeader textTransform="uppercase" textAlign={"center"}>
+              {props.config.name}
+            </DrawerHeader>
             <DrawerBody>
-              <VStack alignItems={"flex-start"}>
+              <VStack alignItems="flex-start">
                 <Button
                   onClick={onClose}
-                  variant={"ghost"}
+                  variant="ghost"
                   colorScheme={props.config.colorScheme}
                 >
-                  <Link to={"/"}>Cricket</Link>
-                </Button>
-                <Button
-                  onClick={onClose}
-                  variant={"ghost"}
-                  colorScheme={props.config.colorScheme}
-                >
-                  <Link to={"/tv"}>TV</Link>
+                  <Link to="/tv">TV</Link>
                 </Button>
               </VStack>
-              <HStack
-                pos={"absolute"}
+              <VStack
+                pos="absolute"
                 bottom={10}
                 left={0}
-                w={"full"}
-                justifyContent={"space-evenly"}
+                w="full"
+                justifyContent="space-evenly"
               >
-                <Button
-                  onClick={onClose}
-                  colorScheme={props.config.colorScheme}
-                >
-                  <Link to={"/login"}>Login</Link>
-                </Button>
-                <Button
-                  onClick={onClose}
-                  colorScheme={props.config.colorScheme}
-                  variant={"outline"}
-                >
-                  <Link to={"/signup"}>Signup</Link>
-                </Button>
-              </HStack>
+              </VStack>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>

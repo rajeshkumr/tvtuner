@@ -32,7 +32,7 @@ return (
 <Flex className={"country-list"} overflowY={'scroll'} direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
 {/* @ts-ignore */ }
 {props.list.map((item: Channel, index: number) => (
-<Box key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} boxShadow={"0rem 0rem 0.2rem #000"} _hover={{
+<Box boxShadow="dark-lg" key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} boxShadow={"0rem 0rem 0.2rem #000"} _hover={{
   border: "1px solid #000",
   boxShadow: "0rem 0rem 0.4rem 0.2rem #000"
 }}>

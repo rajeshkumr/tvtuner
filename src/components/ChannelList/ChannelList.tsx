@@ -22,7 +22,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       (_propItem: M3uChannel, index: number) => index === key
     );
     setActiveIndex(key);
-    console.log("channel list", item);
+    // console.log("channel list", item);
     setChannelItem({
       ...channelItem,
       name: item?.name,
