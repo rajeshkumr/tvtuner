@@ -5,6 +5,7 @@ import { channelItemState, selectedChannelState } from "../../recoilContext";
 import { M3uChannel } from "@iptv/playlist";
 import React from "react";
 import "./ChannelList.style.css";
+import { set as setStorage} from "../../storage/local";
 
 export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
   const [channelItem, setChannelItem] = useRecoilState(channelItemState);
@@ -23,6 +24,8 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
     );
     setActiveIndex(key);
     // console.log("channel list", item);
+    setStorage("CHANNEL", JSON.stringify(item));
+    setStorage("CHANNEL_INDEX", JSON.stringify(key));
     setChannelItem({
       ...channelItem,
       name: item?.name,

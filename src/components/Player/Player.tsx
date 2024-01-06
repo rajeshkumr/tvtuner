@@ -9,6 +9,7 @@ import { selector, useRecoilValue, useRecoilState } from "recoil";
 import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
+import { get as getStorage } from "../../storage/local";
 
 interface Player {
   width?: string;
@@ -31,6 +32,8 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   const [channel, setChannel] = useState([]);
   const [country, setCountry] = useState([]);
   const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
+  const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
+  const [recoilCountryItem, setCountryItem] = useRecoilState(countryItemState);
 
   const getChannelList = async () => {
     const channel: M3uChannel = await getChannels();
@@ -38,14 +41,26 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   };
 
   const getCountryList = async () => {
-    const country: Country = await getCountries();
+    const countryList: Country = await getCountries();
     // @ts-ignore
-    setCountry(country);
+    setCountry(countryList);
+    const storageCountry = recoilChannelItem.groupTitle;
+    const selectCountry = (countryList as any).find((item: any) => item.name === storageCountry);
+    if (selectCountry) {
+      setCountryItem(selectCountry);
+    }
   };
 
   useEffect(() => {
     getChannelList();
     getCountryList();
+    const storageChannel = getStorage("CHANNEL");
+    if (storageChannel) {
+      const parseStorageChannel = JSON.parse(storageChannel);
+      setChannelItem(parseStorageChannel);
+      const channelStorageIndex = Number(getStorage("CHANNEL_INDEX"));
+      setActiveIndex(channelStorageIndex || 0);
+    }
   }, []);
 
   const channelItemSelected = selector({
@@ -61,7 +76,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
     get: ({ get }) => {
       setActiveIndex(0);
       const country = get(countryItemState);
-      return country.name;
+      return recoilCountryItem?.name || country.name;
     }
   });
 
