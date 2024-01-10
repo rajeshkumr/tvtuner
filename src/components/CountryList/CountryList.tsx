@@ -1,20 +1,27 @@
 
 import { Box, Flex } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
-import { countryItemState } from "../../recoilContext";
-import React, { useState } from "react";
+import { countryItemState, selectedChannelState } from "../../recoilContext";
+import React, { useEffect, useState } from "react";
 import "./CountryList.style.css";
+import { set as setStorage} from "../../storage/local";
 // @ts-ignore
 export const CountryList: React.FunctionComponent<Channel> = (props) => {
 
   const [countryItem, setCountryItem] = useRecoilState(countryItemState);
   const [activeClass, setActiveClass] = useState(0);
-
+  const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
+  useEffect(() => {
+    setActiveClass(props.activeIndex);
+  }, [props.activeIndex]);
   function onCountryPress(event: React.SyntheticEvent<EventTarget>) {
     const key = Number((event.currentTarget as HTMLInputElement).dataset.key);
     // @ts-ignore
     const item = props.list.find((_propItem: Channel, index: number) => index === key);
     setActiveClass(key);
+    // Set first channel
+    setActiveIndex(0);
+    setStorage("COUNTRY", JSON.stringify(item));
     setCountryItem({
       ...countryItem,
       name: item?.name,

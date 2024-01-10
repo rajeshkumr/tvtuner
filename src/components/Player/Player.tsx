@@ -9,7 +9,6 @@ import { selector, useRecoilValue, useRecoilState } from "recoil";
 import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
-import { get as getStorage } from "../../storage/local";
 
 interface Player {
   width?: string;
@@ -31,9 +30,7 @@ const defaultProps: Player = {
 export const Player: React.FunctionComponent<Player> = (props) => {
   const [channel, setChannel] = useState([]);
   const [country, setCountry] = useState([]);
-  const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
-  const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
-  const [recoilCountryItem, setCountryItem] = useRecoilState(countryItemState);
+  const [activeIndex] = useRecoilState(selectedChannelState);
 
   const getChannelList = async () => {
     const channel: M3uChannel = await getChannels();
@@ -44,23 +41,11 @@ export const Player: React.FunctionComponent<Player> = (props) => {
     const countryList: Country = await getCountries();
     // @ts-ignore
     setCountry(countryList);
-    const storageCountry = recoilChannelItem.groupTitle;
-    const selectCountry = (countryList as any).find((item: any) => item.name === storageCountry);
-    if (selectCountry) {
-      setCountryItem(selectCountry);
-    }
   };
 
   useEffect(() => {
     getChannelList();
     getCountryList();
-    const storageChannel = getStorage("CHANNEL");
-    if (storageChannel) {
-      const parseStorageChannel = JSON.parse(storageChannel);
-      setChannelItem(parseStorageChannel);
-      const channelStorageIndex = Number(getStorage("CHANNEL_INDEX"));
-      setActiveIndex(channelStorageIndex || 0);
-    }
   }, []);
 
   const channelItemSelected = selector({
@@ -74,9 +59,8 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   const countryItemSelected = selector({
     key: "countryItemSelected",
     get: ({ get }) => {
-      setActiveIndex(0);
       const country = get(countryItemState);
-      return recoilCountryItem?.name || country.name;
+      return country.name;
     }
   });
 
@@ -84,10 +68,11 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   const selectedCountry = useRecoilValue(countryItemSelected);
   const selectedChannel = channel.filter((item: M3uChannel) => item.groupTitle === selectedCountry);
   const selectedUrl = (selectedChannel as M3uChannel).find((item: M3uChannel) => item.tvgId === channelItem.tvgId)?.url || (selectedChannel as M3uChannel)[0]?.url;
+  const countryActiveIndex = country.findIndex((item: Country) => item.name === selectedCountry);
   return (
     // <Spinner size="xl">
     <>
-      <CountryList list={country} />
+      <CountryList list={country} activeIndex={countryActiveIndex}/>
       <PlayerStyle />
       <Box aspectRatio={"16/9"} width={"100%"}>
         <ReactPlayer
