@@ -23,8 +23,8 @@ const defaultProps: Player = {
   width: "100%",
   style: "",
   controls: true,
-  autoplay: true,
-  muted: true,
+  autoplay: false,
+  muted: false,
 }
 
 
