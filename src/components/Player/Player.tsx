@@ -33,6 +33,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   const [country, setCountry] = useState([]);
   const [activeIndex] = useRecoilState(selectedChannelState);
   const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
+  const [autoplay, setAutoplay] = useState(props.autoplay);
 
   const getChannelList = async () => {
     const channel: M3uChannel = await getChannels();
@@ -64,6 +65,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
         setStorage("CHANNEL", JSON.stringify(selectedChannelItem));
         setStorage("CHANNEL_INDEX", JSON.stringify(channelItemIndex));
       }
+      setAutoplay(true);
       return country.name;
     }
   });
@@ -83,7 +85,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           url={selectedUrl}
           width={props.width}
           height={"auto"}
-          playing={props.autoplay}
+          playing={autoplay}
           muted={props.muted}
           controls={props.controls}
         />
