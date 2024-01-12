@@ -3,13 +3,24 @@ import { useRecoilState } from "recoil";
 import { channelItemState, selectedChannelState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./ChannelList.style.css";
 import { set as setStorage} from "../../storage/local";
 
 export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
   const [channelItem, setChannelItem] = useRecoilState(channelItemState);
   const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
+  const channelRef = useRef(null);
+
+  useEffect(() => {
+    // @ts-ignore
+    // NOTE: Time out for scroll into view as multiple scrollIntoView does not work. Might be bug persists to prevent animation of two dom elements at same time.
+    channelRef?.current?.children[activeIndex] && setTimeout(() => {(channelRef.current.children[activeIndex]).scrollIntoView({
+      inline: "center",
+      behavior: "smooth",
+      block: "nearest"
+    })}, 1000);
+  });
 
   function onChannelImgError(
     event: React.SyntheticEvent<HTMLImageElement, Event>
@@ -47,6 +58,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       direction={"row"}
       justifyContent={"space-between"}
       alignItems={"center"}
+      ref={channelRef}
     >
       {props.list.map((item: M3uChannel, index: number) => (
         <Box

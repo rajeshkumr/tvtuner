@@ -9,6 +9,7 @@ import { selector, useRecoilValue, useRecoilState } from "recoil";
 import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
+import { set as setStorage} from "../../storage/local";
 
 interface Player {
   width?: string;
@@ -31,6 +32,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
   const [channel, setChannel] = useState([]);
   const [country, setCountry] = useState([]);
   const [activeIndex] = useRecoilState(selectedChannelState);
+  const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
 
   const getChannelList = async () => {
     const channel: M3uChannel = await getChannels();
@@ -48,23 +50,25 @@ export const Player: React.FunctionComponent<Player> = (props) => {
     getCountryList();
   }, []);
 
-  const channelItemSelected = selector({
-    key: "channelItemSelected",
-    get: ({ get }) => {
-      const channel = get(channelItemState);
-      return channel;
-    }
-  });
-
   const countryItemSelected = selector({
     key: "countryItemSelected",
     get: ({ get }) => {
+      const currentChannel = get(channelItemState);
       const country = get(countryItemState);
+      const selectedChannel = channel.filter((item: M3uChannel) => item.groupTitle === country.name);
+      const findChannelIndex = selectedChannel.findIndex((channelItem: M3uChannel) => channelItem.name === currentChannel.name);
+      if (channel.length > 0 && activeIndex > 0 && findChannelIndex !== activeIndex) {
+        const channelItemIndex = findChannelIndex === -1 ? 0 :findChannelIndex
+        const selectedChannelItem = (selectedChannel as M3uChannel)[channelItemIndex];
+        setChannelItem(selectedChannelItem);
+        setStorage("CHANNEL", JSON.stringify(selectedChannelItem));
+        setStorage("CHANNEL_INDEX", JSON.stringify(channelItemIndex));
+      }
       return country.name;
     }
   });
 
-  const channelItem = useRecoilValue(channelItemSelected);
+  const channelItem = recoilChannelItem;
   const selectedCountry = useRecoilValue(countryItemSelected);
   const selectedChannel = channel.filter((item: M3uChannel) => item.groupTitle === selectedCountry);
   const selectedUrl = (selectedChannel as M3uChannel).find((item: M3uChannel) => item.tvgId === channelItem.tvgId)?.url || (selectedChannel as M3uChannel)[0]?.url;

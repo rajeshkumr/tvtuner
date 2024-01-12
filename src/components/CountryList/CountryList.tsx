@@ -1,8 +1,8 @@
 
 import { Box, Flex } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { countryItemState, selectedChannelState } from "../../recoilContext";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./CountryList.style.css";
 import { set as setStorage} from "../../storage/local";
 // @ts-ignore
@@ -10,10 +10,19 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
 
   const [countryItem, setCountryItem] = useRecoilState(countryItemState);
   const [activeClass, setActiveClass] = useState(0);
-  const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
+  const setActiveIndex = useSetRecoilState(selectedChannelState);
+  const countryRef = useRef(null);
+
   useEffect(() => {
     setActiveClass(props.activeIndex);
+    // @ts-ignore
+    (countryRef?.current?.children[props.activeIndex])?.scrollIntoView({
+      inline: "center",
+      behavior: "smooth",
+      block: "nearest"
+    });
   }, [props.activeIndex]);
+
   function onCountryPress(event: React.SyntheticEvent<EventTarget>) {
     const key = Number((event.currentTarget as HTMLInputElement).dataset.key);
     // @ts-ignore
@@ -36,7 +45,7 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
   }
   
 return (
-<Flex className={"country-list"} overflowY={'scroll'} direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
+<Flex ref={countryRef} className={"country-list"} overflowY={'scroll'} direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
 {/* @ts-ignore */ }
 {props.list.map((item: Channel, index: number) => (
 <Box boxShadow="dark-lg" key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} _hover={{
