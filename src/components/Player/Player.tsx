@@ -17,6 +17,7 @@ interface Player {
   controls?: boolean;
   autoplay?: boolean;
   muted?: boolean;
+  playsinline?: boolean
 }
 
 const defaultProps: Player = {
@@ -25,6 +26,7 @@ const defaultProps: Player = {
   controls: true,
   autoplay: false,
   muted: false,
+  playsinline: true
 }
 
 
@@ -88,6 +90,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           playing={autoplay}
           muted={props.muted}
           controls={props.controls}
+          playsinline={props.playsinline}
         />
       </Box>
       <ChannelList list={selectedChannel} activeIndex={activeIndex} />
