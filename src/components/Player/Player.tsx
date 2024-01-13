@@ -13,6 +13,7 @@ import { set as setStorage} from "../../storage/local";
 
 interface Player {
   width?: string;
+  height?: string;
   style?: string;
   controls?: boolean;
   autoplay?: boolean;
@@ -22,6 +23,7 @@ interface Player {
 
 const defaultProps: Player = {
   width: "100%",
+  height: "100%",
   style: "",
   controls: true,
   autoplay: false,
@@ -86,7 +88,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
         <ReactPlayer
           url={selectedUrl}
           width={props.width}
-          height={"auto"}
+          height={props.height}
           playing={autoplay}
           muted={props.muted}
           controls={props.controls}

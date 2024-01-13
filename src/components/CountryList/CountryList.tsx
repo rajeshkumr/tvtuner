@@ -19,7 +19,7 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
     (countryRef?.current?.children[props.activeIndex])?.scrollIntoView({
       inline: "center",
       behavior: "smooth",
-      block: "nearest"
+      block: "center"
     });
   }, [props.activeIndex]);
 
@@ -40,7 +40,7 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
     (event?.currentTarget as HTMLInputElement)?.scrollIntoView({
       inline: "center",
       behavior: "smooth",
-      block: "nearest"
+      block: "center"
     });
   }
   

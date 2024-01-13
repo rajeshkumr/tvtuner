@@ -18,7 +18,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
     channelRef?.current?.children[activeIndex] && setTimeout(() => {(channelRef.current.children[activeIndex]).scrollIntoView({
       inline: "center",
       behavior: "smooth",
-      block: "nearest"
+      block: "center"
     })}, 1000);
   });
 
@@ -47,7 +47,8 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
     });
     (event?.currentTarget as HTMLInputElement)?.scrollIntoView({
       inline: "center",
-      behavior: "smooth"
+      behavior: "smooth",
+      block: "center"
     });
   }
 
@@ -55,13 +56,16 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
     <Flex
       className={"channel-list"}
       overflowY={"scroll"}
-      direction={"row"}
-      justifyContent={"space-between"}
+      direction={{base: "column", md: "row"}}
+      justifyContent={"start"}
       alignItems={"center"}
       ref={channelRef}
+      height={{base: "100%", md: "auto"}}
+      position={{base: "absolute" , md: "relative"}}
+      width={"100%"}
     >
       {props.list.map((item: M3uChannel, index: number) => (
-        <Box
+        <Flex
           key={index}
           onClick={onChannelPress}
           data-key={index}
@@ -82,19 +86,22 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
             onError={onChannelImgError}
             src={item?.tvgLogo}
             alt={item?.name}
-            width="100%"
+            width={{base: "15%" , md: "100%"}}
             height="100%"
             aspectRatio={"2/1"}
+            minWidth={{md: "100%"}}
           />
           <Box
             whiteSpace={"nowrap"}
             overflow={"hidden"}
             textOverflow={"ellipsis"}
             fontSize={"0.8rem"}
+            width={{base: "85%" , md: "100%"}}
+            lineHeight={{base: "2rem", md: "1rem"}}
           >
             {item?.name}
           </Box>
-        </Box>
+        </Flex>
       ))}
     </Flex>
   );
