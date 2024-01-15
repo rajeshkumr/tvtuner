@@ -23,7 +23,7 @@ export const Header: React.FunctionComponent<Header> = (props) => {
   return (
     <>
       <Box
-        background="#d4bbfc"
+        background={props.config.colorScheme}
         pos="sticky"
         zIndex="9"
         top="0"
@@ -33,8 +33,8 @@ export const Header: React.FunctionComponent<Header> = (props) => {
         boxShadow="dark-lg"
       >
         <Button
-          colorScheme="#000"
-          color="#000"
+          colorScheme="#fff"
+          color="#fff"
           p="0"
           m="1%"
           onClick={onOpen}
@@ -42,8 +42,8 @@ export const Header: React.FunctionComponent<Header> = (props) => {
           boxShadow="dark-lg"
           rounded="md"
           _hover={{
-            borderColor: "#000",
-            border: "2px solid #000",
+            borderColor: "#fff",
+            border: "2px solid #fff",
           }}
         >
           <HamburgerIcon width="2rem" height="2rem" />

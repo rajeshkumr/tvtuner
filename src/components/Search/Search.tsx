@@ -17,7 +17,7 @@ import { set as setStorage} from "../../storage/local";
 import "./Search.style.css";
 
 export const Search: React.FunctionComponent<{screen: string}> = (props) => {
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
   const [suggestionList, setSuggestionList] = useState([]);
   const [searchBarValue, setSearchBarValue] = useState("");
   const country = useRecoilValue(countryListState);
@@ -37,8 +37,8 @@ export const Search: React.FunctionComponent<{screen: string}> = (props) => {
     setSearchBarValue(event?.target?.value);
     if (searchValue) {
       const list = isChecked
-        ? channel.filter((item: M3uChannel) => item?.name?.toLowerCase().includes(searchValue))
-        : country.filter((item: Country) => item?.name?.toLowerCase().includes(searchValue));
+        ? country.filter((item: Country) => item?.name?.toLowerCase().includes(searchValue))
+        : channel.filter((item: M3uChannel) => item?.name?.toLowerCase().includes(searchValue));
       setSuggestionList(list);
     } else {
       setSuggestionList([]);
@@ -47,24 +47,24 @@ export const Search: React.FunctionComponent<{screen: string}> = (props) => {
 
   const onPressSearchText = (event: any) => {
     const name = event.target?.dataset?.name?.toLowerCase();
-    const searchListItemIndex = isChecked ? channel.findIndex((item: M3uChannel) => item?.name?.toLowerCase() === name) : country.findIndex((item: Country) => item?.name?.toLowerCase() === name);
-    const searchListItem = isChecked ? channel.find((item: M3uChannel) => item?.name?.toLowerCase() === name) : country.find((item: Country) => item?.name?.toLowerCase() === name);
+    const searchListItemIndex = isChecked ?  country.findIndex((item: Country) => item?.name?.toLowerCase() === name) : channel.findIndex((item: M3uChannel) => item?.name?.toLowerCase() === name);
+    const searchListItem = isChecked ? country.find((item: Country) => item?.name?.toLowerCase() === name) : channel.find((item: M3uChannel) => item?.name?.toLowerCase() === name);
     if(isChecked) {
+      setCountryItem(searchListItem);
+      setActiveChannelIndex(0);
+      setStorage("COUNTRY", JSON.stringify(searchListItem));
+    } else {
       setChannelItem(searchListItem);
       setActiveChannelIndex(searchListItemIndex);
       setStorage("CHANNEL", JSON.stringify(searchListItem));
       setStorage("CHANNEL_INDEX", JSON.stringify(searchListItemIndex));
-    } else {
-      setCountryItem(searchListItem);
-      setActiveChannelIndex(0);
-      setStorage("COUNTRY", JSON.stringify(searchListItem));
     }
     setSuggestionList([]);
     setSearchBarValue("");
   };
 
 
-  const searchPlaceholder = isChecked ? "channel" : "country";
+  const searchPlaceholder = isChecked ? "country" : "channel";
 
   return (
     <Box display={{
@@ -125,13 +125,13 @@ export const Search: React.FunctionComponent<{screen: string}> = (props) => {
       <Flex align="center">
         <Box margin={"0 0.2rem"}>
           <Text fontSize="md" fontWeight="semibold">
-            Country
+            Channel
           </Text>
         </Box>
         <Switch isChecked={isChecked} onChange={onSwitchChange} colorScheme={config.colorScheme} isInvalid={true} className="search-toggle"/>
         <Box margin={"0 0.2rem"}>
           <Text fontSize="md" fontWeight="semibold">
-            Channel
+            Country
           </Text>
         </Box>
       </Flex>
