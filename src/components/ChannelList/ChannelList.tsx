@@ -1,6 +1,6 @@
 import { Box, Image, Flex } from "@chakra-ui/react";
-import { useRecoilState } from "recoil";
-import { channelItemState, selectedChannelState } from "../../recoilContext";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { channelItemState, selectedChannelState, channelListState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
 import React, { useEffect, useRef } from "react";
@@ -11,6 +11,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
   const [channelItem, setChannelItem] = useRecoilState(channelItemState);
   const [activeIndex, setActiveIndex] = useRecoilState(selectedChannelState);
   const channelRef = useRef(null);
+  const setRecoilChannel = useSetRecoilState(channelListState);
 
   useEffect(() => {
     // @ts-ignore
@@ -20,6 +21,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       behavior: "smooth",
       block: "center"
     })}, 1000);
+    setRecoilChannel(props.list);
   });
 
   function onChannelImgError(

@@ -20,9 +20,9 @@ const defaultObj = {
   channelIndex: 0
 };
 
-const channelItem = storageChannel ? JSON.parse(storageChannel) : defaultObj.channel;
-const countryItem = storageCountry ? JSON.parse(storageCountry) : defaultObj.country;
-const channelIndex= storageChanelIndex ? Number(storageChanelIndex) : 0;
+const channelItem = storageChannel && storageChannel !==  "undefined" ? JSON.parse(storageChannel) : defaultObj.channel;
+const countryItem = storageCountry && storageCountry !== "undefined" ? JSON.parse(storageCountry) : defaultObj.country;
+const channelIndex= storageChanelIndex && storageChanelIndex !== "undefined" ? Number(storageChanelIndex) : 0;
 
 export const channelItemState = atom({
   key: "channelItem",

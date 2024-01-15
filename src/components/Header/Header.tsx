@@ -48,7 +48,7 @@ export const Header: React.FunctionComponent<Header> = (props) => {
         >
           <HamburgerIcon width="2rem" height="2rem" />
         </Button>
-        <Logo config={props.config} />
+        <Logo />
       </Box>
       <Drawer
         isOpen={isOpen}
