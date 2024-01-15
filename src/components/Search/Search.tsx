@@ -14,6 +14,7 @@ import { countryListState, channelListState, channelItemState, countryItemState,
 import { M3uChannel } from "@iptv/playlist";
 import config from "../../constants/initial";
 import { set as setStorage} from "../../storage/local";
+import "./Search.style.css";
 
 export const Search: React.FunctionComponent<{screen: string}> = (props) => {
   const [isChecked, setIsChecked] = useState(true);
@@ -74,11 +75,19 @@ export const Search: React.FunctionComponent<{screen: string}> = (props) => {
     <Flex position={"relative"} boxShadow={"dark-lg"}>
         <Input
           padding={"0.4rem"}
-          margin={"0.4rem"}
+          margin={"0.3rem 0.2rem"}
           type={"search"}
           placeholder={`Search ${searchPlaceholder}...`}
           onChange={onSearchChange}
           value={searchBarValue}
+          borderRadius={"2rem"}
+          border={`1px solid ${config.colorScheme}`}
+          _hover={{
+            border: `1px solid ${config.colorScheme}`
+          }}
+          _focus={{
+            border: `1px solid ${config.colorScheme}`
+          }}
         />
         {suggestionList.length > 0 && (
           <List
@@ -114,13 +123,13 @@ export const Search: React.FunctionComponent<{screen: string}> = (props) => {
           </List>
         )}
       <Flex align="center">
-        <Box margin={"0 0.5rem"}>
+        <Box margin={"0 0.2rem"}>
           <Text fontSize="md" fontWeight="semibold">
             Country
           </Text>
         </Box>
-        <Switch isChecked={isChecked} onChange={onSwitchChange} colorScheme={config.colorScheme}/>
-        <Box margin={"0 0.5rem"}>
+        <Switch isChecked={isChecked} onChange={onSwitchChange} colorScheme={config.colorScheme} isInvalid={true} className="search-toggle"/>
+        <Box margin={"0 0.2rem"}>
           <Text fontSize="md" fontWeight="semibold">
             Channel
           </Text>

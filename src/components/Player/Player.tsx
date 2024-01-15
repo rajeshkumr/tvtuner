@@ -85,6 +85,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
     <>
       <CountryList list={country} activeIndex={countryActiveIndex}/>
       <PlayerStyle />
+      {/* Large screens */}
       <Search screen="md"/>
       <Box aspectRatio={"16/9"} width={"100%"}>
         <ReactPlayer
@@ -97,6 +98,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           playsinline={props.playsinline}
         />
       </Box>
+      {/* Small screens */}
       <Search screen="base"/>
       <ChannelList list={selectedChannel} activeIndex={recoilActiveIndex} />
       {/* </Spinner> */}
