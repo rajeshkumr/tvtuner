@@ -62,7 +62,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
       justifyContent={"start"}
       alignItems={"center"}
       ref={channelRef}
-      height={{base: "100%", md: "auto"}}
+      height={{base: "44vh", md: "auto"}}
       position={{base: "absolute" , md: "relative"}}
       width={"100%"}
     >

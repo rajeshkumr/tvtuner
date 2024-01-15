@@ -1,0 +1,4 @@
+.search-toggle[data-invalid] [data-invalid]{
+  --switch-bg: var(--chakra-colors-purple-500);
+  border-radius: unset;
+}
