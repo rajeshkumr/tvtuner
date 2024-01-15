@@ -1,4 +1,4 @@
 export default {
   name: "Tv Tuner",
-  colorScheme: "purple"
+  colorScheme: "#339DEA"
 }

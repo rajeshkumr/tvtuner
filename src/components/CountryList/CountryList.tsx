@@ -53,7 +53,7 @@ return (
   border: {md: "1px solid #000"},
   boxShadow: {md: "0rem 0rem 0.4rem 0.2rem #000"}
 }}>
-        {item?.flag}
+        <Box fontSize={"1rem"}>{item?.flag}</Box>
         <Box whiteSpace={"nowrap"} overflow={"hidden"} textOverflow={"ellipsis"} fontSize={"0.8rem"}>{item?.name}</Box>
       </Box>
       ))}
