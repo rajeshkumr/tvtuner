@@ -5,7 +5,7 @@ interface config {
 }
 
 interface Country {
-name: string;
-code: string;
-flag: string;
+  name: string;
+  code: string;
+  flag: string;
 }

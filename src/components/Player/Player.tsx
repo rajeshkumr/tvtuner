@@ -6,10 +6,11 @@ import { getChannels, getCountries } from "../../api";
 import { ChannelList } from "../ChannelList";
 import { CountryList } from "../CountryList";
 import { selector, useRecoilValue, useRecoilState } from "recoil";
-import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
+import { channelItemState, countryItemState, selectedChannelState} from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
 import { set as setStorage} from "../../storage/local";
+import { Search } from "../Search";
 
 interface Player {
   width?: string;
@@ -35,8 +36,8 @@ const defaultProps: Player = {
 export const Player: React.FunctionComponent<Player> = (props) => {
   const [channel, setChannel] = useState([]);
   const [country, setCountry] = useState([]);
-  const [activeIndex] = useRecoilState(selectedChannelState);
-  const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
+  const [recoilActiveIndex] = useRecoilState(selectedChannelState);
+  const [recoilChannelItem, setRecoilChannelItem] = useRecoilState(channelItemState);
   const [autoplay, setAutoplay] = useState(props.autoplay);
 
   const getChannelList = async () => {
@@ -62,10 +63,10 @@ export const Player: React.FunctionComponent<Player> = (props) => {
       const country = get(countryItemState);
       const selectedChannel = channel.filter((item: M3uChannel) => item.groupTitle === country.name);
       const findChannelIndex = selectedChannel.findIndex((channelItem: M3uChannel) => channelItem.name === currentChannel.name);
-      if (channel.length > 0 && activeIndex > 0 && findChannelIndex !== activeIndex) {
+      if (channel.length > 0 && recoilActiveIndex > 0 && findChannelIndex !== recoilActiveIndex) {
         const channelItemIndex = findChannelIndex === -1 ? 0 :findChannelIndex
         const selectedChannelItem = (selectedChannel as M3uChannel)[channelItemIndex];
-        setChannelItem(selectedChannelItem);
+        setRecoilChannelItem(selectedChannelItem);
         setStorage("CHANNEL", JSON.stringify(selectedChannelItem));
         setStorage("CHANNEL_INDEX", JSON.stringify(channelItemIndex));
       }
@@ -84,6 +85,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
     <>
       <CountryList list={country} activeIndex={countryActiveIndex}/>
       <PlayerStyle />
+      <Search screen="md"/>
       <Box aspectRatio={"16/9"} width={"100%"}>
         <ReactPlayer
           url={selectedUrl}
@@ -95,7 +97,8 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           playsinline={props.playsinline}
         />
       </Box>
-      <ChannelList list={selectedChannel} activeIndex={activeIndex} />
+      <Search screen="base"/>
+      <ChannelList list={selectedChannel} activeIndex={recoilActiveIndex} />
       {/* </Spinner> */}
     </>
   );

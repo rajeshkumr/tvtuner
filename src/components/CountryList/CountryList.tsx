@@ -1,20 +1,22 @@
 
 import { Box, Flex } from "@chakra-ui/react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { countryItemState, selectedChannelState } from "../../recoilContext";
+import { useSetRecoilState } from "recoil";
+import { countryItemState, selectedChannelState, countryListState } from "../../recoilContext";
 import React, { useEffect, useState, useRef } from "react";
 import "./CountryList.style.css";
 import { set as setStorage} from "../../storage/local";
 // @ts-ignore
 export const CountryList: React.FunctionComponent<Channel> = (props) => {
 
-  const [countryItem, setCountryItem] = useRecoilState(countryItemState);
+  const setCountryItem = useSetRecoilState(countryItemState);
   const [activeClass, setActiveClass] = useState(0);
   const setActiveIndex = useSetRecoilState(selectedChannelState);
   const countryRef = useRef(null);
+  const setRecoilCountry = useSetRecoilState(countryListState);
 
   useEffect(() => {
     setActiveClass(props.activeIndex);
+    setRecoilCountry(props.list);
     // @ts-ignore
     (countryRef?.current?.children[props.activeIndex])?.scrollIntoView({
       inline: "center",
@@ -32,7 +34,6 @@ export const CountryList: React.FunctionComponent<Channel> = (props) => {
     setActiveIndex(0);
     setStorage("COUNTRY", JSON.stringify(item));
     setCountryItem({
-      ...countryItem,
       name: item?.name,
       code: item?.code,
       flag: item?.flag,
@@ -49,8 +50,8 @@ return (
 {/* @ts-ignore */ }
 {props.list.map((item: Channel, index: number) => (
 <Box boxShadow="dark-lg" key={index} onClick={onCountryPress} data-key={index} className={activeClass === index ? "item active" : "item"} width={"100%"} minWidth={"6rem"} padding={"0.2rem"} margin={"0.2rem"} backgroundColor={"#eee"} _hover={{
-  border: "1px solid #000",
-  boxShadow: "0rem 0rem 0.4rem 0.2rem #000"
+  border: {md: "1px solid #000"},
+  boxShadow: {md: "0rem 0rem 0.4rem 0.2rem #000"}
 }}>
         {item?.flag}
         <Box whiteSpace={"nowrap"} overflow={"hidden"} textOverflow={"ellipsis"} fontSize={"0.8rem"}>{item?.name}</Box>
