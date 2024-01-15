@@ -38,3 +38,13 @@ export const selectedChannelState = atom({
   key: "selectedChannel",
   default: channelIndex
 });
+
+export const countryListState = atom({
+  key: "countryList",
+  default: []
+})
+
+export const channelListState = atom({
+  key: "channelList",
+  default: []
+})

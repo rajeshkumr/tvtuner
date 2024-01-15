@@ -15,7 +15,7 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
   useEffect(() => {
     // @ts-ignore
     // NOTE: Time out for scroll into view as multiple scrollIntoView does not work. Might be bug persists to prevent animation of two dom elements at same time.
-    channelRef?.current?.children[activeIndex] && setTimeout(() => {(channelRef.current.children[activeIndex]).scrollIntoView({
+    channelRef?.current?.children?.length > 0 && channelRef.current.children[activeIndex] && setTimeout(() => {(channelRef.current.children[activeIndex]).scrollIntoView({
       inline: "center",
       behavior: "smooth",
       block: "center"
@@ -70,16 +70,18 @@ export const ChannelList: React.FunctionComponent<M3uChannel> = (props) => {
           onClick={onChannelPress}
           data-key={index}
           className={activeIndex === index ? "item active" : "item"}
-          width={"100%"}
+          width={{base: "98%", md: "100%"}}
           minWidth={"6rem"}
+          maxWidth={{md: "6rem"}}
           padding={"0.2rem"}
           margin={"0.2rem"}
           backgroundColor={"#eee"}
           boxShadow={"0rem 0rem 0.2rem #000"}
           _hover={{
-            border: "1px solid #000",
-            boxShadow: "0rem 0rem 0.4rem 0.2rem #000",
+            border: {md: "1px solid #000"},
+            boxShadow: {md: "0rem 0rem 0.4rem 0.2rem #000"}
           }}
+          title={item?.name}
         >
           <Image
             loading="lazy"

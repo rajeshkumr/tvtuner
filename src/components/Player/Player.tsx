@@ -6,10 +6,11 @@ import { getChannels, getCountries } from "../../api";
 import { ChannelList } from "../ChannelList";
 import { CountryList } from "../CountryList";
 import { selector, useRecoilValue, useRecoilState } from "recoil";
-import { channelItemState, countryItemState, selectedChannelState } from "../../recoilContext";
+import { channelItemState, countryItemState, selectedChannelState, countryListState, channelListState } from "../../recoilContext";
 // @ts-ignore
 import { M3uChannel } from "@iptv/playlist";
 import { set as setStorage} from "../../storage/local";
+import { Search } from "../Search";
 
 interface Player {
   width?: string;
@@ -33,8 +34,8 @@ const defaultProps: Player = {
 
 
 export const Player: React.FunctionComponent<Player> = (props) => {
-  const [channel, setChannel] = useState([]);
-  const [country, setCountry] = useState([]);
+  const [channel, setChannel] = useRecoilState(channelListState);
+  const [country, setCountry] = useRecoilState(countryListState);
   const [activeIndex] = useRecoilState(selectedChannelState);
   const [recoilChannelItem, setChannelItem] = useRecoilState(channelItemState);
   const [autoplay, setAutoplay] = useState(props.autoplay);
@@ -95,6 +96,7 @@ export const Player: React.FunctionComponent<Player> = (props) => {
           playsinline={props.playsinline}
         />
       </Box>
+      <Search />
       <ChannelList list={selectedChannel} activeIndex={activeIndex} />
       {/* </Spinner> */}
     </>
