@@ -13,7 +13,7 @@ function App() {
     <RecoilRoot>
       <Header config={config} />
       <Routes>
-          <Route path="/" element={<Player />} />
+          <Route path="/" element={<FramePlayer />} />
           <Route path="/tv" element={<Player />} />
           <Route path="/cricket" element={<FramePlayer />} />
       </Routes>
