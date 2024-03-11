@@ -5,7 +5,7 @@ export const FramePlayer: React.FunctionComponent = () => {
   // <iframe src={"https://thetvapp.to/tv/wabc-new-york-abc-east-live-stream/"} style={{aspectRatio: 16/9}} width="100%" height="100%" allow="autoplay; fullscreen; picture-in-picture" /> 
   // );
   <ReactPlayer
-          url={"https://content-auso1.uplynk.com/channel/640a5a594b434c2691e20580afda564f/g.m3u8?pbs=7c562f71727a4a088dc14f3712866c24"}
+          url={"https://content.uplynk.com/channel/ext/96195dc445894d079a91958abba8d3af/kfsn_24x7_news.m3u8"}
           width={"100%"}
           height={"100%"}
           playing={true}
